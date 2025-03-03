@@ -25,7 +25,7 @@ export default function App() {
     setEmployees((prev) => {
       const updatedEmployees = [...prev, data];
 
-      // Convert Date objects to strings for proper JSON storage
+   
       const storageEmployees = updatedEmployees.map(emp => ({
         ...emp,
         joiningDate: emp.joiningDate instanceof Date ? emp.joiningDate.toISOString() : emp.joiningDate
@@ -43,7 +43,7 @@ export default function App() {
     <Router>
       <Header />
       <main className='flex flex-col items-center p-8'>
-        {/* Place the ToastContainer component only once at the top level */}
+       
         <ToastContainer 
           position="top-right"
           autoClose={3000}

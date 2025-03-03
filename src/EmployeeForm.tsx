@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import emailjs from '@emailjs/browser';
 
-// Define Zod schema for validation
+
 const employeeSchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters long'),
   email: z.string().email('Invalid email format'),
@@ -14,15 +14,14 @@ const employeeSchema = z.object({
     { message: 'Phone number must be between 10 and 15 digits' }
   ),
   role: z.enum(['Developer', 'Designer', 'Manager'], { required_error: 'Role is required' }),
-  joiningDate: z.string() // Accept string from the form input
-    .refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date format' }) // Validate it's a valid date string
-    .transform(val => new Date(val)), // Transform to Date object
+  joiningDate: z.string() 
+    .refine(val => !isNaN(Date.parse(val)), { message: 'Invalid date format' }) 
+    .transform(val => new Date(val)),
 });
 
 type EmployeeFormInputs = z.infer<typeof employeeSchema>;
 
-// Initialize EmailJS
-// Replace these with your actual EmailJS service credentials
+
 const EMAIL_SERVICE_ID = 'service_5pn3lib';
 const EMAIL_TEMPLATE_ID = 'template_72v2kej';
 const EMAIL_PUBLIC_KEY = 'UEbf7gAmpVVwnzb3R';
@@ -33,12 +32,11 @@ const EmployeeForm: React.FC<{ onSubmit: (data: EmployeeFormInputs) => void }> =
   });
 
   const handleFormSubmit = (data: EmployeeFormInputs) => {
-    // Send the form data to the parent component
+   
     onSubmit(data);
     
-    // Prepare the email data
     const emailData = {
-      to_email: 'arpita09gharai@gmail.com', // Replace with recipient email
+      to_email: 'arpita09gharai@gmail.com', 
       subject: `New Employee Registration: ${data.name}`,
       employee_name: data.name,
       employee_email: data.email,
@@ -47,7 +45,7 @@ const EmployeeForm: React.FC<{ onSubmit: (data: EmployeeFormInputs) => void }> =
       joining_date: data.joiningDate.toLocaleDateString(),
     };
     
-    // Send email using EmailJS
+   
     emailjs.send(
       EMAIL_SERVICE_ID,
       EMAIL_TEMPLATE_ID,
